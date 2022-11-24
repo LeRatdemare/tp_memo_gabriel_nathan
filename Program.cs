@@ -13,7 +13,7 @@ int compteur = 0;
 
 void genererNouvelleGrille(int[,] grille)
 {
-    // On commence par mettre des -1 de partout
+    // On commence par reset la grille
     remplirGrille2Dimensions(grille, valeurCaseVide);
 
     /* Ensuite on va choisir un caractère au hasard sur une plage donnée
@@ -31,18 +31,19 @@ void genererNouvelleGrille(int[,] grille)
         } while (indexOfintInTab(dejaPlaces, valAPlacer) != -1);
 
         // Ensuite on place toutes les cartes -c- dans la grille
-        int nbPlaces = 0;
+        int nbCartesDuUpletPlaces = 0;
         int position = 0;
         do
         {
             // S'il y a de la place dans la case actuelle, on a 20% de chances de mettre la valeur dedans
-            if (tableauDesReponses[position / nbUplets, position % nbUplets] == valeurCaseVide && gen.NextDouble() < 0.2)
+            if (tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] == valeurCaseVide && gen.NextDouble() < 0.2)
             {
-                tableauDesReponses[position / nbUplets, position % nbUplets] = valAPlacer;
-                nbPlaces++;
+                tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] = valAPlacer;
+                nbCartesDuUpletPlaces++;
             }
-            position = (position++) % nbUplets * nbCartesParUplet; // On avance dans le tableau
-        } while (nbPlaces < nbCartesParUplet);
+            position = (++position) % nbUplets * nbCartesParUplet; // On avance dans le tableau
+        } while (nbCartesDuUpletPlaces < nbCartesParUplet);
+        dejaPlaces[i] = valAPlacer;
     }
 }
 
@@ -56,7 +57,9 @@ int indexOfintInTab(int[] tab, int x)
 
 void remplirGrille2Dimensions(int[,] grille, int valeur)
 {
-    // A coder
+    for (int i = 0; i < grille.GetLength(0); i++)
+        for (int j = 0; j < grille.GetLength(1); j++)
+            grille[i, j] = valeur;
 }
 
 void jouerUnCoup(int ligne, int colonne)
