@@ -1,41 +1,55 @@
-﻿Console.Write($"Saisir le nombre de cartes par n-uplet : ");
+﻿int valeurCaseVide = -1;
+
+Console.Write($"Saisir le nombre de cartes par n-uplet : ");
 int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets]; // A générer
 genererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets]; // Mettre des -1 partout
-char dernierCoupJoue; // A initialiser après le 1er coup
+int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
 void genererNouvelleGrille(int[,] grille)
 {
     // On commence par mettre des -1 de partout
-    remplirGrille2Dimensions(grille, -1);
+    remplirGrille2Dimensions(grille, valeurCaseVide);
 
     /* Ensuite on va choisir un caractère au hasard sur une plage donnée
     dont on va placer tous les éléments du n-uplet sur la grille. */
-    char[] dejaPlaces = new char[nbUplets];
+    int[] dejaPlaces = new int[nbUplets];
     Random gen = new Random();
 
     for (int i = 0; i < nbUplets; i++)
     {
         // On va générer un caractère aléatoire tant qu'on en a un qui est dans dejaPlaces
-        char c;
+        int valAPlacer;
         do
         {
-            c = (char)('a' + gen.Next(0, nbUplets));
-        } while (indexOfCharInTab(dejaPlaces, c) != -1);
+            valAPlacer = gen.Next(0, nbUplets);
+        } while (indexOfintInTab(dejaPlaces, valAPlacer) != -1);
 
         // Ensuite on place toutes les cartes -c- dans la grille
-        // A coder
+        int nbPlaces = 0;
+        int position = 0;
+        // Méthodes dans la boucle à revoir, beaucoup de calculs pas forcément utiles
+        do
+        {
+            // S'il y a de la place dans la case actuelle, on a 20% de chances de mettre la valeur dedans
+            if (tableauDesReponses[position / nbUplets, position % nbUplets] == valeurCaseVide && gen.NextDouble() < 0.2)
+            {
+                tableauDesReponses[position / nbUplets, position % nbUplets] = valAPlacer;
+                nbPlaces++;
+            }
+            position = (position++) % nbUplets * nbCartesParUplet; // On avance dans le tableau
+        } while (nbPlaces < nbCartesParUplet);
     }
 }
 
-int indexOfCharInTab(char[] tab, char c)
+int indexOfintInTab(int[] tab, int x)
 {
     int i = 0;
-    while (i < tab.Length && tab[i] != c) i++;
+    while (i < tab.Length && tab[i] != x) i++;
     if (i < tab.Length) return i; // Si on trouve l'élément on renvoie sa position
     return -1; // -1 sinon
 }
