@@ -4,9 +4,10 @@ Console.Write($"Saisir le nombre de cartes par n-uplet : ");
 int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
-int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets]; // A générer
+int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
 genererNouvelleGrille(tableauDesReponses);
-int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets]; // Mettre des -1 partout
+int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
+remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
@@ -32,7 +33,6 @@ void genererNouvelleGrille(int[,] grille)
         // Ensuite on place toutes les cartes -c- dans la grille
         int nbPlaces = 0;
         int position = 0;
-        // Méthodes dans la boucle à revoir, beaucoup de calculs pas forcément utiles
         do
         {
             // S'il y a de la place dans la case actuelle, on a 20% de chances de mettre la valeur dedans
