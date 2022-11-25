@@ -110,6 +110,7 @@ bool AGagne(int[,] grille)
         }
     }
     return true; // Tous les items ont été trouvés. Le joueur a donc gagné.
+
 }
 
 void LancerLaPartie()
@@ -124,6 +125,13 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 // AfficherGrille(grille);
 
 // AGagne
+
+grille[0, 1] = 1;
+grille[1, 0] = 1;
+grille[1, 2] = 1;
+if (AGagne(grille) == true)
+    Console.WriteLine("Félicitation ! Vous avez gagné.");
+
 
 // LancerLaPartie
 
