@@ -68,12 +68,26 @@ void afficherGrille()
 {
     int LigneAffichage = 0;      //cette variable sert de compteur pour l'affichage des items de la grille pour une ligne.
     int ColonneAffichage = 0;    //cette variable sert de compteur pour savoir à quelle colonne on se situe lors de l'affichage.
-    while (LigneAffichage < nbUplets)
-    {
-        if (tableauJoueur[LigneAffichage,ColonneAffichage] == -1)
-        {
 
-        }
+    while (ColonneAffichage < nbCartesParUplet)
+    {
+       while (LigneAffichage < nbUplets)
+       {
+           if (tableauJoueur[LigneAffichage,ColonneAffichage] == valeurCaseVide)
+           {
+              Console.Write("*"); //on affiche une astérisque lorsque l'item n'a pas encore été trouvé
+              LigneAffichage++; //mise à jour du compteur de lignes
+           }
+
+          if (tableauJoueur[LigneAffichage,ColonneAffichage] != valeurCaseVide)
+            {
+                Console.Write($"tableauDesReponses[LigneAffichage,ColonneAffichage]"); //on affiche l'item quand item a été trouvé
+                LigneAffichage++; //mise à jour du compteur de lignes
+            }
+       }
+
+        Console.WriteLine(" "); //retour à la ligne
+        ColonneAffichage++;
     }
 
 
