@@ -74,6 +74,9 @@ void afficherGrille(int[,] grille)
 {
     for (int ligne = 0; ligne < nbCartesParUplet; ligne++)
     {
+
+        Console.Write(ligne); // Affichage du nom de la ligne pour aider le joueur
+
         for (int colonne = 0; colonne < nbUplets; colonne++)
         {
             if (grille[ligne, colonne] == valeurCaseVide)
@@ -83,9 +86,10 @@ void afficherGrille(int[,] grille)
                 Console.Write((char)(grille[ligne, colonne] + 'a')); // On affiche l'item quand il a été trouvé
         }
 
-        Console.WriteLine(" "); // Retour à la ligne
-        ligne++; // Mise à jour du compteur de colonnes
+        Console.WriteLine(""); // Retour à la ligne
     }
+
+    //Ensuite, on va afficher le nom 
 
 }
 
@@ -100,7 +104,6 @@ bool aGagne()
 
 // afficherGrille
 
-nbUplets = 5;
-nbCartesParUplet = 2;
+
 
 
