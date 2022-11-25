@@ -7,8 +7,8 @@ Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
 genererNouvelleGrille(tableauDesReponses);
-int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+int[,] grille = new int[nbCartesParUplet, nbUplets];
+remplirGrille2Dimensions(grille, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
@@ -70,23 +70,21 @@ void jouerUnCoup(int ligne, int colonne)
     // A coder
 }
 
-void afficherGrille()
+void afficherGrille(int[,] grille)
 {
-    //cette variable sert de compteur pour savoir à quelle colonne on se situe lors de l'affichage.
-
-    for (int LigneAffichage = 0; LigneAffichage < nbCartesParUplet; LigneAffichage++)
+    for (int ligne = 0; ligne < nbCartesParUplet; ligne++)
     {
-        for (int ColonneAffichage = 0; ColonneAffichage < nbUplets; ColonneAffichage++)
+        for (int colonne = 0; colonne < nbUplets; colonne++)
         {
-            if (tableauJoueur[LigneAffichage, ColonneAffichage] == valeurCaseVide)
-                Console.Write("*"); //on affiche une astérisque lorsque l'item n'a pas encore été trouvé
+            if (grille[ligne, colonne] == valeurCaseVide)
+                Console.Write("*"); // On affiche une astérisque lorsque l'item n'a pas encore été trouvé
 
-            if (tableauJoueur[LigneAffichage, ColonneAffichage] != valeurCaseVide)
-                Console.Write((char)(tableauDesReponses[LigneAffichage, ColonneAffichage] + 'a')); //on affiche l'item quand item a été trouvé
+            else
+                Console.Write((char)(grille[ligne, colonne] + 'a')); // On affiche l'item quand il a été trouvé
         }
 
-        Console.WriteLine(" "); //retour à la ligne
-        LigneAffichage++; //mise à jour du compteur de colonnes
+        Console.WriteLine(" "); // Retour à la ligne
+        ligne++; // Mise à jour du compteur de colonnes
     }
 
 }
@@ -99,3 +97,10 @@ bool aGagne()
 
 // -------------------------------------------------- TESTS
 // remplirGrille
+
+// afficherGrille
+
+nbUplets = 5;
+nbCartesParUplet = 2;
+
+
