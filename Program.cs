@@ -1,4 +1,5 @@
-﻿int valeurCaseVide = -1;
+﻿// -------------------------------------------------- INITIALISATION VARIABLES
+int valeurCaseVide = -1;
 
 Console.Write($"Saisir le nombre de cartes par n-uplet : ");
 int nbCartesParUplet = int.Parse(Console.ReadLine()!);
@@ -10,6 +11,8 @@ int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
 remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
+
+// -------------------------------------------------- SOUS-PROGRAMMES
 
 void genererNouvelleGrille(int[,] grille)
 {
@@ -76,3 +79,6 @@ bool aGagne()
 {
     return false; // A coder
 }
+
+// -------------------------------------------------- TESTS
+// remplirGrille
