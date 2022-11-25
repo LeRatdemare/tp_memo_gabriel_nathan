@@ -25,7 +25,18 @@ void jouerUnCoup(int ligne, int colonne)
 
 void afficherGrille()
 {
-    // A coder
+    int LigneAffichage = 0;      //cette variable sert de compteur pour l'affichage des items de la grille pour une ligne.
+    int ColonneAffichage = 0;    //cette variable sert de compteur pour savoir à quelle colonne on se situe lors de l'affichage.
+    while (LigneAffichage < nbUplets)
+    {
+        if (tableauJoueur[LigneAffichage,ColonneAffichage] == -1)
+        {
+
+        }
+    }
+
+
+
 }
 
 bool aGagne()
