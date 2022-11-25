@@ -6,9 +6,9 @@ int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-genererNouvelleGrille(tableauDesReponses);
+// genererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+// remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
@@ -70,7 +70,7 @@ void jouerUnCoup(int ligne, int colonne)
     // A coder
 }
 
-void afficherGrille()
+void afficherGrille(int[,] grille)
 {
     // A coder
 }
@@ -82,3 +82,17 @@ bool aGagne()
 
 // -------------------------------------------------- TESTS
 // remplirGrille
+int[,] grille = { { 1, 2, 3 }, { 5, 5, 5 } };
+remplirGrille2Dimensions(grille, 25);
+string ch = "[";
+for (int i = 0; i < grille.GetLength(0); i++)
+{
+    ch += '[';
+    for (int j = 0; j < grille.GetLength(1) - 1; j++)
+    {
+        ch += grille[i, j] + ", ";
+    }
+    ch += grille[i, grille.GetLength(1) - 1] + "]";
+    ch += (i < grille.GetLength(0) - 1) ? ",\n" : "]";
+}
+Console.WriteLine(ch);
