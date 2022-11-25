@@ -104,25 +104,17 @@ bool aGagne()
     return false; // A coder
 }
 
+void lancerLaPartie()
+{
+
+}
+
 // -------------------------------------------------- TESTS
-// remplirGrille
+// remplirGrille & afficherGrille
 int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 // remplirGrille2Dimensions(grille, 25);
-string ch = "[";
-for (int i = 0; i < grille.GetLength(0); i++)
-{
-    ch += '[';
-    for (int j = 0; j < grille.GetLength(1) - 1; j++)
-    {
-        ch += grille[i, j] + ", ";
-    }
-    ch += grille[i, grille.GetLength(1) - 1] + "]";
-    ch += (i < grille.GetLength(0) - 1) ? ",\n" : "]";
-}
-Console.WriteLine(ch);
+// afficherGrille(grille);
 
-// afficherGrille
-afficherGrille(grille);
 
 
 
