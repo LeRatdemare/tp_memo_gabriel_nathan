@@ -6,18 +6,18 @@ int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-// genererNouvelleGrille(tableauDesReponses);
+// GenererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-// remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+// RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
 // -------------------------------------------------- SOUS-PROGRAMMES
 
-void genererNouvelleGrille(int[,] grille)
+void GenererNouvelleGrille(int[,] grille)
 {
     // On commence par reset la grille
-    remplirGrille2Dimensions(grille, valeurCaseVide);
+    RemplirGrille2Dimensions(grille, valeurCaseVide);
 
     /* Ensuite on va choisir un caractère au hasard sur une plage donnée
     dont on va placer tous les éléments du n-uplet sur la grille. */
@@ -31,7 +31,7 @@ void genererNouvelleGrille(int[,] grille)
         do
         {
             valAPlacer = gen.Next(0, nbUplets);
-        } while (indexOfintInTab(dejaPlaces, valAPlacer) != -1);
+        } while (IndexOfintInTab(dejaPlaces, valAPlacer) != -1);
 
         // Ensuite on place toutes les cartes -c- dans la grille
         int nbCartesDuUpletPlaces = 0;
@@ -50,7 +50,7 @@ void genererNouvelleGrille(int[,] grille)
     }
 }
 
-int indexOfintInTab(int[] tab, int x)
+int IndexOfintInTab(int[] tab, int x)
 {
     int i = 0;
     while (i < tab.Length && tab[i] != x) i++;
@@ -58,19 +58,19 @@ int indexOfintInTab(int[] tab, int x)
     return -1; // -1 sinon
 }
 
-void remplirGrille2Dimensions(int[,] grille, int valeur)
+void RemplirGrille2Dimensions(int[,] grille, int valeur)
 {
     for (int i = 0; i < grille.GetLength(0); i++)
         for (int j = 0; j < grille.GetLength(1); j++)
             grille[i, j] = valeur;
 }
 
-void jouerUnCoup(int ligne, int colonne)
+void JouerUnCoup(int ligne, int colonne)
 {
     // A coder
 }
 
-void afficherGrille(int[,] grille)
+void AfficherGrille(int[,] grille)
 {
     Console.Write("  ");
     for (int colonne = 0; colonne < grille.GetLength(1); colonne++)
@@ -99,21 +99,21 @@ void afficherGrille(int[,] grille)
 }
 
 
-bool aGagne()
+bool AGagne()
 {
     return false; // A coder
 }
 
-void lancerLaPartie()
+void LancerLaPartie()
 {
 
 }
 
 // -------------------------------------------------- TESTS
-// remplirGrille & afficherGrille
+// RemplirGrille & afficherGrille
 int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
-// remplirGrille2Dimensions(grille, 25);
-// afficherGrille(grille);
+// RemplirGrille2Dimensions(grille, 25);
+// AfficherGrille(grille);
 
 
 
