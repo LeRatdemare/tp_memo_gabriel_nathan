@@ -1,19 +1,22 @@
-﻿int valeurCaseVide = -1;
+﻿// -------------------------------------------------- INITIALISATION VARIABLES
+int valeurCaseVide = -1;
 
 Console.Write($"Saisir le nombre de cartes par n-uplet : ");
 int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-genererNouvelleGrille(tableauDesReponses);
+// genererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+// remplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue; // A initialiser après le 1er coup
 int compteur = 0;
 
+// -------------------------------------------------- SOUS-PROGRAMMES
+
 void genererNouvelleGrille(int[,] grille)
 {
-    // On commence par mettre des -1 de partout
+    // On commence par reset la grille
     remplirGrille2Dimensions(grille, valeurCaseVide);
 
     /* Ensuite on va choisir un caractère au hasard sur une plage donnée
@@ -31,18 +34,19 @@ void genererNouvelleGrille(int[,] grille)
         } while (indexOfintInTab(dejaPlaces, valAPlacer) != -1);
 
         // Ensuite on place toutes les cartes -c- dans la grille
-        int nbPlaces = 0;
+        int nbCartesDuUpletPlaces = 0;
         int position = 0;
         do
         {
             // S'il y a de la place dans la case actuelle, on a 20% de chances de mettre la valeur dedans
-            if (tableauDesReponses[position / nbUplets, position % nbUplets] == valeurCaseVide && gen.NextDouble() < 0.2)
+            if (tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] == valeurCaseVide && gen.NextDouble() < 0.2)
             {
-                tableauDesReponses[position / nbUplets, position % nbUplets] = valAPlacer;
-                nbPlaces++;
+                tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] = valAPlacer;
+                nbCartesDuUpletPlaces++;
             }
-            position = (position++) % nbUplets * nbCartesParUplet; // On avance dans le tableau
-        } while (nbPlaces < nbCartesParUplet);
+            position = (++position) % nbUplets * nbCartesParUplet; // On avance dans le tableau
+        } while (nbCartesDuUpletPlaces < nbCartesParUplet);
+        dejaPlaces[i] = valAPlacer;
     }
 }
 
@@ -56,7 +60,9 @@ int indexOfintInTab(int[] tab, int x)
 
 void remplirGrille2Dimensions(int[,] grille, int valeur)
 {
-    // A coder
+    for (int i = 0; i < grille.GetLength(0); i++)
+        for (int j = 0; j < grille.GetLength(1); j++)
+            grille[i, j] = valeur;
 }
 
 void jouerUnCoup(int ligne, int colonne)
@@ -64,12 +70,60 @@ void jouerUnCoup(int ligne, int colonne)
     // A coder
 }
 
-void afficherGrille()
+void afficherGrille(int[,] grille)
 {
-    // A coder
+    Console.Write("  ");
+    for (int colonne = 0; colonne < grille.GetLength(1); colonne++)
+        Console.Write((char)(colonne + 'A')); // Affichage du nom des colonnes pour aider le joueur
+
+    Console.WriteLine();
+
+    for (int ligne = 0; ligne < grille.GetLength(0); ligne++)
+    {
+
+        Console.Write($"{ligne} "); // Affichage du nom de la ligne pour aider le joueur
+
+        for (int colonne = 0; colonne < grille.GetLength(1); colonne++)
+        {
+            if (grille[ligne, colonne] == valeurCaseVide)
+                Console.Write("*"); // On affiche une astérisque lorsque l'item n'a pas encore été trouvé
+
+            else
+                Console.Write((char)(grille[ligne, colonne] + 'a')); // On affiche l'item quand il a été trouvé
+        }
+
+        Console.WriteLine(); // Retour à la ligne
+    }
+
+
 }
+
 
 bool aGagne()
 {
     return false; // A coder
 }
+
+// -------------------------------------------------- TESTS
+// remplirGrille
+int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
+// remplirGrille2Dimensions(grille, 25);
+string ch = "[";
+for (int i = 0; i < grille.GetLength(0); i++)
+{
+    ch += '[';
+    for (int j = 0; j < grille.GetLength(1) - 1; j++)
+    {
+        ch += grille[i, j] + ", ";
+    }
+    ch += grille[i, grille.GetLength(1) - 1] + "]";
+    ch += (i < grille.GetLength(0) - 1) ? ",\n" : "]";
+}
+Console.WriteLine(ch);
+
+// afficherGrille
+afficherGrille(grille);
+
+
+
+
