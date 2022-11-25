@@ -115,7 +115,11 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 // RemplirGrille2Dimensions(grille, 25);
 // AfficherGrille(grille);
 
+// AGagne
 
+// LancerLaPartie
 
+// GenererNouvelleGrille
 
+// JouerUnCoup
 
