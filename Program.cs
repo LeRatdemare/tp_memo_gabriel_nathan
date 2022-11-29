@@ -30,7 +30,7 @@ void GenererNouvelleGrille(int[,] grille)
         while (nbCartesPlaceesDuUplet < nbCartesParUplet)
         {
             // On commence par déterminer les coordonnées de la case où placer la carte
-            position = gen.Next(0, nbCartesParUplet * nbCartesPlaceesDuUplet);
+            position = gen.Next(0, nbCartesParUplet * nbUplets);
             int ligne = position / grille.GetLength(1);
             int colonne = position % grille.GetLength(1);
             // Après avoir on parcours la grille depuis la case générée jusqu'à tomber sur une case vide
@@ -116,6 +116,7 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 // LancerLaPartie
 
 // GenererNouvelleGrille
+/* Problèmes à résoudre : Les caractères de même valeur sont trop rapprochés.*/
 GenererNouvelleGrille(tableauDesReponses);
 AfficherGrille(tableauDesReponses);
 
