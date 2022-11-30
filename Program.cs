@@ -14,39 +14,35 @@ int compteur = 0;
 
 // -------------------------------------------------- SOUS-PROGRAMMES
 
+/* La grille doit obligatoirement avoir nbUplets*nbCartesParUplet
+    cases, quelque soit ses dimensions.*/
 void GenererNouvelleGrille(int[,] grille)
 {
     // On commence par reset la grille
     RemplirGrille2Dimensions(grille, valeurCaseVide);
-
-    /* Ensuite on va choisir un caractère au hasard sur une plage donnée
-    dont on va placer tous les éléments du n-uplet sur la grille. */
-    int[] dejaPlaces = new int[nbUplets];
     Random gen = new Random();
 
     for (int i = 0; i < nbUplets; i++)
     {
-        // On va générer un caractère aléatoire tant qu'on en a un qui est dans dejaPlaces
-        int valAPlacer;
-        do
+        // On place toutes les cartes i dans la grille
+        int nbCartesPlaceesDuUplet = 0;
+        int position;
+        while (nbCartesPlaceesDuUplet < nbCartesParUplet)
         {
-            valAPlacer = gen.Next(0, nbUplets);
-        } while (IndexOfintInTab(dejaPlaces, valAPlacer) != -1);
-
-        // Ensuite on place toutes les cartes -c- dans la grille
-        int nbCartesDuUpletPlaces = 0;
-        int position = 0;
-        do
-        {
-            // S'il y a de la place dans la case actuelle, on a 20% de chances de mettre la valeur dedans
-            if (tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] == valeurCaseVide && gen.NextDouble() < 0.2)
+            // On commence par déterminer les coordonnées de la case où placer la carte
+            position = gen.Next(0, nbCartesParUplet * nbUplets);
+            int ligne = position / grille.GetLength(1);
+            int colonne = position % grille.GetLength(1);
+            // Après avoir on parcours la grille depuis la case générée jusqu'à tomber sur une case vide
+            while (grille[ligne, colonne] != -1)
             {
-                tableauDesReponses[position / grille.GetLength(1), position % grille.GetLength(1)] = valAPlacer;
-                nbCartesDuUpletPlaces++;
+                colonne = ++colonne % grille.GetLength(1);
+                ligne = (ligne + (colonne == 0 ? 1 : 0)) % grille.GetLength(0);
             }
-            position = (++position) % nbUplets * nbCartesParUplet; // On avance dans le tableau
-        } while (nbCartesDuUpletPlaces < nbCartesParUplet);
-        dejaPlaces[i] = valAPlacer;
+            // A ce moment là on place une carte et on incrémente le compteur
+            grille[ligne, colonne] = i;
+            nbCartesPlaceesDuUplet++;
+        }
     }
 }
 
@@ -120,6 +116,10 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 // LancerLaPartie
 
 // GenererNouvelleGrille
+/* Problèmes à résoudre : Les caractères de même valeur sont trop rapprochés.*/
+GenererNouvelleGrille(tableauDesReponses);
+AfficherGrille(tableauDesReponses);
+
 
 // JouerUnCoup
 
