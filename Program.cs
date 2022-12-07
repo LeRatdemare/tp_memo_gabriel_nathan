@@ -9,7 +9,7 @@ int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
 // GenererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
 // RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
-int dernierCoupJoue; // A initialiser après le 1er coup
+int dernierCoupJoue = -1; // On initialise à -1 pour traiter le 1er coup comme si on cassait la série en cours
 int compteur = 0;
 
 // -------------------------------------------------- SOUS-PROGRAMMES
@@ -61,9 +61,44 @@ void RemplirGrille2Dimensions(int[,] grille, int valeur)
             grille[i, j] = valeur;
 }
 
-void JouerUnCoup(int ligne, int colonne)
+bool JouerUnCoup(int ligne, int colonne)
 {
-    // A coder
+    // On vérifie que les coordonnées sont dans la grille et que la case est libre
+    if (!CoupValide(ligne, colonne))
+    {
+        Console.WriteLine($"Les coordonnées saisies ne sont pas valides (hors de la grille ou carte déjà retournée)...");
+        return false;
+    }
+
+    // Si la carte retournée est la même que -dernierCoupJoue- on incrémente le compteur
+    if (tableauDesReponses[ligne, colonne] == dernierCoupJoue)
+        compteur++;
+
+    // Sinon si on casse la série actuelle
+    else
+    {
+        // Si on n'avait pas encore trouvé toutes les cartes du n-uplet
+        if (compteur < nbCartesParUplet)
+        {
+            // On cache toutes les -dernierCoupJoue- de la grille
+            for (int i = 0; i < tableauJoueur.GetLength(0); i++)
+                for (int j = 0; j < tableauJoueur.GetLength(1); j++)
+                    if (tableauJoueur[ligne, colonne] == dernierCoupJoue)
+                        tableauJoueur[ligne, colonne] = -1;
+        }
+        compteur = 1;
+    }
+
+    // Quoi qu'il arrive on rend visible la carte sur -tableauJoueur-
+    tableauJoueur[ligne, colonne] = tableauDesReponses[ligne, colonne];
+    return true;
+}
+
+bool CoupValide(int ligne, int colonne)
+{
+    return ligne >= 0 && ligne < tableauJoueur.GetLength(0) &&
+    colonne >= 0 && colonne < tableauJoueur.GetLength(1) &&
+    tableauJoueur[ligne, colonne] == -1;
 }
 
 void AfficherGrille(int[,] grille)
