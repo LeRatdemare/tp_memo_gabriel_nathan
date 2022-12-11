@@ -83,11 +83,8 @@ bool JouerUnCoup(int ligne, int colonne)
             // On cache toutes les -dernierCoupJoue- de la grille
             for (int i = 0; i < tableauJoueur.GetLength(0); i++)
                 for (int j = 0; j < tableauJoueur.GetLength(1); j++)
-                    if (tableauJoueur[ligne, colonne] == dernierCoupJoue)
-                    {
-                        Console.WriteLine($"YES");
-                        tableauJoueur[ligne, colonne] = valeurCaseVide;
-                    }
+                    if (tableauJoueur[i, j] == dernierCoupJoue)
+                        tableauJoueur[i, j] = valeurCaseVide;
         }
         compteur = 1;
     }
@@ -162,21 +159,21 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 
 
 // JouerUnCoup ---------
-Console.WriteLine($"Solution :");
-AfficherGrille(tableauDesReponses);
-Console.WriteLine($"Tableau du joueur AVANT le coup");
-AfficherGrille(tableauJoueur);
-Console.WriteLine($"Tableau du joueur APRES le coup");
-JouerUnCoup(tableauJoueur.GetLength(0) - 1, tableauJoueur.GetLength(1) - 1);
-AfficherGrille(tableauJoueur);
-JouerUnCoup(0, 0);
-AfficherGrille(tableauJoueur);
-JouerUnCoup(0, 1);
-AfficherGrille(tableauJoueur);
-JouerUnCoup(0, 2);
-AfficherGrille(tableauJoueur);
-JouerUnCoup(0, 3);
-AfficherGrille(tableauJoueur);
-JouerUnCoup(0, 4);
-AfficherGrille(tableauJoueur);
+// Console.WriteLine($"Solution :");
+// AfficherGrille(tableauDesReponses);
+// Console.WriteLine($"Tableau du joueur AVANT le coup");
+// AfficherGrille(tableauJoueur);
+// Console.WriteLine($"Tableau du joueur APRES le coup");
+// JouerUnCoup(tableauJoueur.GetLength(0) - 1, tableauJoueur.GetLength(1) - 1);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 0);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 1);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 2);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 3);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 4);
+// AfficherGrille(tableauJoueur);
 
