@@ -6,9 +6,9 @@ int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-// GenererNouvelleGrille(tableauDesReponses);
+GenererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-// RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
 int dernierCoupJoue = -1; // On initialise à -1 pour traiter le 1er coup comme si on cassait la série en cours
 int compteur = 0;
 
@@ -84,13 +84,18 @@ bool JouerUnCoup(int ligne, int colonne)
             for (int i = 0; i < tableauJoueur.GetLength(0); i++)
                 for (int j = 0; j < tableauJoueur.GetLength(1); j++)
                     if (tableauJoueur[ligne, colonne] == dernierCoupJoue)
-                        tableauJoueur[ligne, colonne] = -1;
+                    {
+                        Console.WriteLine($"YES");
+                        tableauJoueur[ligne, colonne] = valeurCaseVide;
+                    }
         }
         compteur = 1;
     }
 
     // Quoi qu'il arrive on rend visible la carte sur -tableauJoueur-
     tableauJoueur[ligne, colonne] = tableauDesReponses[ligne, colonne];
+    // On n'oublie pas non plus de mettre à jour le dernierCoup
+    dernierCoupJoue = tableauJoueur[ligne, colonne];
     return true;
 }
 
@@ -152,9 +157,26 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 
 // GenererNouvelleGrille
 /* Problèmes à résoudre : Les caractères de même valeur sont trop rapprochés.*/
-GenererNouvelleGrille(tableauDesReponses);
+// GenererNouvelleGrille(tableauDesReponses);
+// AfficherGrille(tableauDesReponses);
+
+
+// JouerUnCoup ---------
+Console.WriteLine($"Solution :");
 AfficherGrille(tableauDesReponses);
-
-
-// JouerUnCoup
+Console.WriteLine($"Tableau du joueur AVANT le coup");
+AfficherGrille(tableauJoueur);
+Console.WriteLine($"Tableau du joueur APRES le coup");
+JouerUnCoup(tableauJoueur.GetLength(0) - 1, tableauJoueur.GetLength(1) - 1);
+AfficherGrille(tableauJoueur);
+JouerUnCoup(0, 0);
+AfficherGrille(tableauJoueur);
+JouerUnCoup(0, 1);
+AfficherGrille(tableauJoueur);
+JouerUnCoup(0, 2);
+AfficherGrille(tableauJoueur);
+JouerUnCoup(0, 3);
+AfficherGrille(tableauJoueur);
+JouerUnCoup(0, 4);
+AfficherGrille(tableauJoueur);
 
