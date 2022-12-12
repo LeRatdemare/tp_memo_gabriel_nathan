@@ -6,10 +6,10 @@ int nbCartesParUplet = int.Parse(Console.ReadLine()!);
 Console.Write($"Saisir le nombre de n-uplet(s) : ");
 int nbUplets = int.Parse(Console.ReadLine()!);
 int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-// GenererNouvelleGrille(tableauDesReponses);
+GenererNouvelleGrille(tableauDesReponses);
 int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-// RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
-int dernierCoupJoue; // A initialiser après le 1er coup
+RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+int dernierCoupJoue = -1; // On initialise à -1 pour traiter le 1er coup comme si on cassait la série en cours
 int compteur = 0;
 
 // -------------------------------------------------- SOUS-PROGRAMMES
@@ -61,9 +61,46 @@ void RemplirGrille2Dimensions(int[,] grille, int valeur)
             grille[i, j] = valeur;
 }
 
-void JouerUnCoup(int ligne, int colonne)
+bool JouerUnCoup(int ligne, int colonne)
 {
-    // A coder
+    // On vérifie que les coordonnées sont dans la grille et que la case est libre
+    if (!CoupValide(ligne, colonne))
+    {
+        Console.WriteLine($"Les coordonnées saisies ne sont pas valides (hors de la grille ou carte déjà retournée)...");
+        return false;
+    }
+
+    // Si la carte retournée est la même que -dernierCoupJoue- on incrémente le compteur
+    if (tableauDesReponses[ligne, colonne] == dernierCoupJoue)
+        compteur++;
+
+    // Sinon si on casse la série actuelle
+    else
+    {
+        // Si on n'avait pas encore trouvé toutes les cartes du n-uplet
+        if (compteur < nbCartesParUplet)
+        {
+            // On cache toutes les -dernierCoupJoue- de la grille
+            for (int i = 0; i < tableauJoueur.GetLength(0); i++)
+                for (int j = 0; j < tableauJoueur.GetLength(1); j++)
+                    if (tableauJoueur[i, j] == dernierCoupJoue)
+                        tableauJoueur[i, j] = valeurCaseVide;
+        }
+        compteur = 1;
+    }
+
+    // Quoi qu'il arrive on rend visible la carte sur -tableauJoueur-
+    tableauJoueur[ligne, colonne] = tableauDesReponses[ligne, colonne];
+    // On n'oublie pas non plus de mettre à jour le dernierCoup
+    dernierCoupJoue = tableauJoueur[ligne, colonne];
+    return true;
+}
+
+bool CoupValide(int ligne, int colonne)
+{
+    return ligne >= 0 && ligne < tableauJoueur.GetLength(0) &&
+    colonne >= 0 && colonne < tableauJoueur.GetLength(1) &&
+    tableauJoueur[ligne, colonne] == -1;
 }
 
 void AfficherGrille(int[,] grille)
@@ -117,9 +154,26 @@ int[,] grille = { { 1, -1, 3 }, { -1, 5, -1 } };
 
 // GenererNouvelleGrille
 /* Problèmes à résoudre : Les caractères de même valeur sont trop rapprochés.*/
-GenererNouvelleGrille(tableauDesReponses);
-AfficherGrille(tableauDesReponses);
+// GenererNouvelleGrille(tableauDesReponses);
+// AfficherGrille(tableauDesReponses);
 
 
-// JouerUnCoup
+// JouerUnCoup ---------
+// Console.WriteLine($"Solution :");
+// AfficherGrille(tableauDesReponses);
+// Console.WriteLine($"Tableau du joueur AVANT le coup");
+// AfficherGrille(tableauJoueur);
+// Console.WriteLine($"Tableau du joueur APRES le coup");
+// JouerUnCoup(tableauJoueur.GetLength(0) - 1, tableauJoueur.GetLength(1) - 1);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 0);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 1);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 2);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 3);
+// AfficherGrille(tableauJoueur);
+// JouerUnCoup(0, 4);
+// AfficherGrille(tableauJoueur);
 
