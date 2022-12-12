@@ -1,16 +1,13 @@
 ﻿// -------------------------------------------------- INITIALISATION VARIABLES
+int nbCartesParUplet;
+int nbUplets;
+int nbLignes;
+int nbColonnes;
+int[,] tableauDesReponses;
+int[,] tableauJoueur;
+int dernierCoupJoue;
+int compteur;
 int valeurCaseVide = -1;
-
-Console.Write($"Saisir le nombre de cartes par n-uplet : ");
-int nbCartesParUplet = int.Parse(Console.ReadLine()!);
-Console.Write($"Saisir le nombre de n-uplet(s) : ");
-int nbUplets = int.Parse(Console.ReadLine()!);
-int[,] tableauDesReponses = new int[nbCartesParUplet, nbUplets];
-GenererNouvelleGrille(tableauDesReponses);
-int[,] tableauJoueur = new int[nbCartesParUplet, nbUplets];
-RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
-int dernierCoupJoue = -1; // On initialise à -1 pour traiter le 1er coup comme si on cassait la série en cours
-int compteur = 0;
 
 // -------------------------------------------------- SOUS-PROGRAMMES
 
@@ -65,10 +62,7 @@ bool JouerUnCoup(int ligne, int colonne)
 {
     // On vérifie que les coordonnées sont dans la grille et que la case est libre
     if (!CoupValide(ligne, colonne))
-    {
-        Console.WriteLine($"Les coordonnées saisies ne sont pas valides (hors de la grille ou carte déjà retournée)...");
         return false;
-    }
 
     // Si la carte retournée est la même que -dernierCoupJoue- on incrémente le compteur
     if (tableauDesReponses[ligne, colonne] == dernierCoupJoue)
@@ -146,9 +140,61 @@ bool AGagne(int[,] grille)
 
 }
 
-void LancerLaPartie()
+// -------------------------------------------------- Lancement du jeu
+void InitialiserPartie()
 {
+    /* Fonction qui initialise ou réinitialise les variables globales.*/
+    Console.Write($"Saisir le nombre de cartes par n-uplet : ");
+    nbCartesParUplet = int.Parse(Console.ReadLine()!);
 
+    Console.Write($"Saisir le nombre de n-uplet(s) : ");
+    nbUplets = int.Parse(Console.ReadLine()!);
+
+    // Coder CalculerDimensionsGrilleCarre...
+    int[] dimensionsGrille = CalculerDimensionsGrilleCarre(nbCartesParUplet, nbUplets);
+    nbLignes = dimensionsGrille[0];
+    nbColonnes = dimensionsGrille[1];
+
+    tableauDesReponses = new int[nbCartesParUplet, nbUplets];
+    GenererNouvelleGrille(tableauDesReponses);
+    tableauJoueur = new int[nbCartesParUplet, nbUplets];
+    RemplirGrille2Dimensions(tableauJoueur, valeurCaseVide);
+
+    dernierCoupJoue = -1; // On initialise à -1 pour traiter le 1er coup comme si on cassait la série en cours
+    compteur = 0;
+}
+
+void LancerPartie()
+{
+    // On commence par Initialiser la partie et lui afficher la grille vierge
+    InitialiserPartie();
+    AfficherGrille(tableauJoueur);
+
+    // Ensuite, le joueur retourne des cartes tant qu'il n'a pas gagné
+    int ligne;
+    int colonne;
+    int tour = 0;
+    do
+    {
+        tour++;
+        Console.WriteLine($" -_-_-_-_-_-_- Tour n°{tour} -_-_-_-_-_-_- ");
+        // Le joueur saisi d'abord la ligne...
+
+        // ...puis la colonne
+
+        // Ensuite on joue le coup
+        // if (!JouerUnCoup(ligne, colonne))
+        // {
+        //     Console.WriteLine($"Les coordonnées saisies ne sont pas valides (hors de la grille ou carte déjà retournée)...");
+        //     tour--; // On décrémente pour ne pas avancer au final
+        // }
+    } while (!AGagne(tableauJoueur));
+}
+
+// -------------------------------------------------- Bonus
+int[] CalculerDimensionsGrilleCarre(int nbCartesParUplet, int nbUplets)
+{
+    return new int[] { };
 }
 
 // -------------------------------------------------- TESTS
